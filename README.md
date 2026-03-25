@@ -31,8 +31,8 @@ An Astro-powered publication exploring capitalism, colonialism, and climate coll
 Prerequisites: Node.js 22.21.1 or higher, Git.
 
 ```bash
-git clone https://github.com/theredsoil/konscio.git
-cd konscio
+git clone https://github.com/theredsoil/laterite.git
+cd laterite
 npm install
 npx lefthook install  # set up git hooks
 npm run dev

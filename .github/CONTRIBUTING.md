@@ -50,7 +50,7 @@ Content should align with the site's focus on:
 ### Getting Started
 
 1. Fork the repository
-2. Clone your fork: `git clone https://github.com/yourusername/konscio.git`
+2. Clone your fork: `git clone https://github.com/yourusername/laterite.git`
 3. Install dependencies: `npm install`
 4. Start development server: `npm run dev`
 

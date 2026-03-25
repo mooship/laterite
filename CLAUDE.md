@@ -4,7 +4,7 @@ This file provides guidance to Claude Code (claude.ai/code) when working with co
 
 ## About
 
-Konscio ("The Red Soil") is a static Astro publication site for eco-socialist and decolonial analysis. Code is MIT-licensed; content is CC0.
+Laterite ("The Red Soil") is a static Astro publication site for eco-socialist and decolonial analysis. Code is MIT-licensed; content is CC0.
 
 ## Commands
 
