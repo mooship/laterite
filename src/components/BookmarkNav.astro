@@ -55,12 +55,12 @@ const { sections, ariaLabel = "Category navigation" } = Astro.props;
       toggle.addEventListener("click", handleToggle);
 
       const links = list.querySelectorAll("a");
-      links.forEach((link) => {
+      for (const link of links) {
         link.addEventListener("click", () => {
           toggle.setAttribute("aria-expanded", "false");
           list.classList.remove("show");
         });
-      });
+      }
 
       document.addEventListener("click", (e) => {
         if (!toggle.contains(e.target) && !list.contains(e.target)) {
@@ -73,13 +73,13 @@ const { sections, ariaLabel = "Category navigation" } = Astro.props;
     const updateAriaCurrent = () => {
       const hash = window.location.hash;
       const links = document.querySelectorAll(".bookmark-list a");
-      links.forEach((link) => {
+      for (const link of links) {
         if (link.getAttribute("href") === hash) {
           link.setAttribute("aria-current", "true");
         } else {
           link.removeAttribute("aria-current");
         }
-      });
+      }
     };
     window.addEventListener("hashchange", updateAriaCurrent);
     window.addEventListener("scroll", () => {

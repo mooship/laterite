@@ -17,9 +17,9 @@ export function extractHeadings(content: string): Heading[] {
     const text = match[2].trim();
     const slug = text
       .toLowerCase()
-      .replace(/[^\w\s-]/g, "")
-      .replace(/\s+/g, "-")
-      .replace(/^-+|-+$/g, "");
+      .replaceAll(/[^\w\s-]/g, "")
+      .replaceAll(/\s+/g, "-")
+      .replaceAll(/^-+|-+$/g, "");
 
     headings.push({ depth, text, slug });
   }

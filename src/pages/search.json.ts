@@ -21,7 +21,7 @@ function convertToDate(dateValue: unknown): Date {
 }
 
 function isValidDate(date: Date): boolean {
-  return !isNaN(date.getTime());
+  return !Number.isNaN(date.getTime());
 }
 
 function processPost(post: CollectionEntry<"dispatches">): SearchResult | null {
@@ -54,19 +54,19 @@ export const GET: APIRoute = async () => {
         const date = convertToDate(post.data.datePublished);
         return isValidDate(date) && date.getTime() <= Date.now();
       })
-      .map(processPost)
+      .map((post) => processPost(post))
       .filter((item): item is SearchResult => item !== null);
 
-    const searchData: SearchResult[] = allProcessed.sort(
+    const searchData: SearchResult[] = allProcessed.toSorted(
       (a, b) => new Date(b.datePublished).getTime() - new Date(a.datePublished).getTime()
     );
 
-    return new Response(JSON.stringify(searchData), {
+    return Response.json(searchData, {
       headers: { "Content-Type": "application/json" },
     });
   } catch (error) {
     console.error("Error generating search data:", error);
-    return new Response(JSON.stringify([]), {
+    return Response.json([], {
       headers: { "Content-Type": "application/json" },
       status: 200,
     });

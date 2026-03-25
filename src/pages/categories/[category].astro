@@ -4,40 +4,33 @@ import { config } from "../../config";
 import { slugifyPath } from "../../utils/slugify";
 
 export async function getStaticPaths() {
-  const mdPostsGlob = import.meta.glob("../../content/dispatches/*.md", {
-    eager: true,
-  });
-  const mdxPostsGlob = import.meta.glob("../../content/dispatches/*.mdx", {
-    eager: true,
-  });
-
-  const allPosts = [...Object.values(mdPostsGlob), ...Object.values(mdxPostsGlob)]
+  const allPosts = Object.values(
+    import.meta.glob("../../content/dispatches/*.{md,mdx}", { eager: true })
+  )
     .filter((post: any) => !post.frontmatter.draft)
     .filter((post: any) => {
       const rawDate = post.frontmatter.datePublished;
       const date = new Date(rawDate);
-      if (isNaN(date.getTime())) {
+      if (Number.isNaN(date.getTime())) {
         return false;
       }
       return date <= new Date();
     }) as any[];
 
   const allCategories = new Set<string>();
-  allPosts.forEach((post: any) => {
-    if (post.frontmatter.categories) {
-      post.frontmatter.categories.forEach((category: string) => {
-        allCategories.add(category);
-      });
+  for (const post of allPosts) {
+    for (const category of post.frontmatter.categories ?? []) {
+      allCategories.add(category);
     }
-  });
+  }
 
-  return Array.from(allCategories).map((category: string) => {
-    const categorySlug = category.toLowerCase().replace(/[/\s]+/g, "-");
+  return [...allCategories].map((category: string) => {
+    const categorySlug = category.toLowerCase().replaceAll(/[/\s]+/g, "-");
     const postsInCategory = allPosts
       .filter(
         (post: any) => post.frontmatter.categories && post.frontmatter.categories.includes(category)
       )
-      .sort(
+      .toSorted(
         (a: any, b: any) =>
           new Date(b.frontmatter.datePublished).getTime() -
           new Date(a.frontmatter.datePublished).getTime()

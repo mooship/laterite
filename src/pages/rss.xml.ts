@@ -23,7 +23,7 @@ interface PostModule {
 }
 
 function isValidDate(date: Date): boolean {
-  return !isNaN(date.getTime());
+  return !Number.isNaN(date.getTime());
 }
 
 function processPost(path: string, post: unknown): RSSItem | null {
@@ -67,7 +67,7 @@ export const GET: APIRoute = async (context) => {
   const items: RSSItem[] = Object.entries(posts)
     .map(([path, post]) => processPost(path, post))
     .filter((item): item is RSSItem => item !== null)
-    .sort((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
+    .toSorted((a, b) => b.pubDate.getTime() - a.pubDate.getTime());
 
   const siteUrl = context.site ? new URL(context.site).toString() : "/";
 

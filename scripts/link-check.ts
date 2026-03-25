@@ -1,17 +1,17 @@
-import fs from "fs";
 import linkCheck from "link-check";
-import path from "path";
+import fs from "node:fs";
+import path from "node:path";
 
 const CONTENT_DIRS = [path.join(process.cwd(), "src")];
 
 function getSourceFiles(dir: string): string[] {
   let results: string[] = [];
   const list = fs.readdirSync(dir);
-  list.forEach((file) => {
+  for (const file of list) {
     const filePath = path.join(dir, file);
     const stat = fs.statSync(filePath);
     if (stat && stat.isDirectory()) {
-      results = results.concat(getSourceFiles(filePath));
+      results = [...results, ...getSourceFiles(filePath)];
     } else if (
       file.endsWith(".md") ||
       file.endsWith(".mdx") ||
@@ -21,7 +21,7 @@ function getSourceFiles(dir: string): string[] {
     ) {
       results.push(filePath);
     }
-  });
+  }
   return results;
 }
 
@@ -40,20 +40,20 @@ function extractLinks(content: string): string[] {
 }
 
 async function checkLinks(links: string[]): Promise<{ url: string; status: string }[]> {
-  const results: { url: string; status: string }[] = [];
-  for (const url of links) {
-    const res = await new Promise<{ url: string; status: string }>((resolve) => {
-      linkCheck(url, (err, result) => {
-        if (err) {
-          resolve({ url, status: "error" });
-        } else {
-          resolve({ url, status: result.status });
-        }
-      });
-    });
-    results.push(res);
-  }
-  return results;
+  return Promise.all(
+    links.map(
+      (url) =>
+        new Promise<{ url: string; status: string }>((resolve) => {
+          linkCheck(url, (err, result) => {
+            if (err) {
+              resolve({ url, status: "error" });
+            } else {
+              resolve({ url, status: result.status });
+            }
+          });
+        })
+    )
+  );
 }
 
 export { checkLinks, extractLinks, getSourceFiles };
@@ -64,7 +64,7 @@ export async function checkAllExternalLinks() {
     for (const file of files) {
       const content = fs.readFileSync(file, "utf8");
       const links = extractLinks(content);
-      allLinks = allLinks.concat(links);
+      allLinks = [...allLinks, ...links];
     }
   }
   allLinks = allLinks.filter((url) => url.startsWith("http"));

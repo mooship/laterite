@@ -1,18 +1,14 @@
 ---
 import { categoryPath } from "../utils/url";
 
-const mdPostsGlob = import.meta.glob("../content/dispatches/*.md", {
-  eager: true,
-});
-const mdxPostsGlob = import.meta.glob("../content/dispatches/*.mdx", {
-  eager: true,
-});
-const allPosts = [...Object.values(mdPostsGlob), ...Object.values(mdxPostsGlob)]
+const allPosts = Object.values(
+  import.meta.glob("../content/dispatches/*.{md,mdx}", { eager: true })
+)
   .filter((post: any) => post && post.frontmatter && !post.frontmatter.draft)
   .filter((post: any) => {
     const rawDate = post.frontmatter.datePublished;
     const date = new Date(rawDate);
-    if (isNaN(date.getTime())) {
+    if (Number.isNaN(date.getTime())) {
       return false;
     }
     return date <= new Date();

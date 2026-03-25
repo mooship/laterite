@@ -2,36 +2,24 @@
 import Layout from "../components/Layout.astro";
 import { slugifyPath } from "../utils/slugify";
 
-const mdPostsGlob = import.meta.glob("../content/dispatches/*.md", {
-  eager: true,
-});
-const mdxPostsGlob = import.meta.glob("../content/dispatches/*.mdx", {
-  eager: true,
-});
-
-const allPosts = [
-  ...Object.entries(mdPostsGlob).map(([path, post]) =>
-    typeof post === "object" && post !== null
-      ? { ...post, slug: slugifyPath(path) }
-      : { slug: slugifyPath(path) }
-  ),
-  ...Object.entries(mdxPostsGlob).map(([path, post]) =>
-    typeof post === "object" && post !== null
-      ? { ...post, slug: slugifyPath(path) }
-      : { slug: slugifyPath(path) }
-  ),
-] as any[];
+const allPosts = Object.entries(
+  import.meta.glob("../content/dispatches/*.{md,mdx}", { eager: true })
+).map(([path, post]) =>
+  typeof post === "object" && post !== null
+    ? { ...post, slug: slugifyPath(path) }
+    : { slug: slugifyPath(path) }
+) as any[];
 const sortedPosts = allPosts
   .filter((post: any) => !post.frontmatter.draft)
   .filter((post: any) => {
     const rawDate = post.frontmatter.datePublished;
     const date = new Date(rawDate);
-    if (isNaN(date.getTime())) {
+    if (Number.isNaN(date.getTime())) {
       return false;
     }
     return date <= new Date();
   })
-  .sort(
+  .toSorted(
     (a: any, b: any) =>
       new Date(b.frontmatter.datePublished).getTime() -
       new Date(a.frontmatter.datePublished).getTime()

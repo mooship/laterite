@@ -34,6 +34,7 @@ Prerequisites: Node.js 22.21.1 or higher, Git.
 git clone https://github.com/theredsoil/konscio.git
 cd konscio
 npm install
+npx lefthook install  # set up git hooks
 npm run dev
 ```
 

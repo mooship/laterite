@@ -11,6 +11,6 @@ export function withBase(path: string): string {
 }
 
 export function categoryPath(category: string): string {
-  const slug = category.toLowerCase().replace(/[/\s]+/g, "-");
+  const slug = category.toLowerCase().replaceAll(/[/\s]+/g, "-");
   return withBase(`categories/${slug}`);
 }

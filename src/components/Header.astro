@@ -4,7 +4,7 @@ import HeaderMobileMenu from "./HeaderMobileMenu.astro";
 import HeaderNavigation from "./HeaderNavigation.astro";
 import HeaderSearch from "./HeaderSearch.astro";
 
-const { base = "" } = Astro.site ? { base: config.baseUrl } : { base: "" };
+const base = Astro.site ? config.baseUrl : "";
 ---
 
 <header class="site-header">
@@ -105,8 +105,8 @@ const { base = "" } = Astro.site ? { base: config.baseUrl } : { base: "" };
 
 <script>
   function initHamburgerMenu() {
-    const hamburgerToggle = document.getElementById("hamburger-toggle");
-    const mobileMenu = document.getElementById("mobile-menu");
+    const hamburgerToggle = document.querySelector("#hamburger-toggle");
+    const mobileMenu = document.querySelector("#mobile-menu");
     const body = document.body;
 
     if (!hamburgerToggle || !mobileMenu) {
@@ -128,13 +128,13 @@ const { base = "" } = Astro.site ? { base: config.baseUrl } : { base: "" };
     });
 
     const mobileNavLinks = mobileMenu.querySelectorAll(".mobile-nav-link");
-    mobileNavLinks.forEach((link) => {
+    for (const link of mobileNavLinks) {
       link.addEventListener("click", () => {
         mobileMenu.classList.remove("active");
         hamburgerToggle.setAttribute("aria-expanded", "false");
         body.style.overflow = "";
       });
-    });
+    }
 
     document.addEventListener("keydown", (e) => {
       if (e.key === "Escape" && mobileMenu.classList.contains("active")) {
