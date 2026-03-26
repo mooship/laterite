@@ -1,28 +1,25 @@
 import rss from "@astrojs/rss";
-import type { APIContext } from "astro";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { GET } from "../../src/pages/rss.xml.ts";
+import { createContext, mockConfig, mockFeedItems } from "./fixtures/feed-mocks";
 
 vi.mock("@astrojs/rss", () => ({
   default: vi.fn(() => ({ status: 200, body: "rss content" })),
 }));
 
-vi.mock("../../src/config", () => ({
-  config: {
-    title: "Test Site",
-    description: "Test Description",
-  },
-}));
+vi.mock("../../src/config", () => ({ config: mockConfig }));
 
-const createContext = (site?: string): APIContext =>
-  ({
-    site: site ? new URL(site) : undefined,
-  }) as unknown as APIContext;
+vi.mock("../../src/utils/feed", () => ({
+  getFeedItems: () => mockFeedItems,
+  resolveSiteUrl: (ctx: any) =>
+    ctx.site ? new URL(ctx.site).toString().replace(/\/$/, "") : "http://localhost",
+}));
 
 describe("rss.xml", () => {
   beforeEach(() => {
     vi.clearAllMocks();
   });
+
   it("should generate RSS feed with correct structure", async () => {
     const context = createContext("https://example.com") as any;
     await GET(context);
@@ -40,21 +37,15 @@ describe("rss.xml", () => {
     );
 
     const callArgs = (rss as any).mock.calls[0][0];
-    expect(callArgs.items.length).toBeGreaterThan(0);
-    expect(callArgs.items[0]).toHaveProperty("title");
-    expect(callArgs.items[0]).toHaveProperty("pubDate");
-    expect(callArgs.items[0]).toHaveProperty("description");
-    expect(callArgs.items[0]).toHaveProperty("link");
-    expect(callArgs.items[0].link).toMatch(/^\/dispatches\//);
-
-    if (callArgs.items.length > 1) {
-      expect(callArgs.items[0].pubDate.getTime()).toBeGreaterThanOrEqual(
-        callArgs.items[1].pubDate.getTime()
-      );
-    }
+    expect(callArgs.items).toHaveLength(2);
+    expect(callArgs.items[0].title).toBe("First Post");
+    expect(callArgs.items[0].pubDate).toBeInstanceOf(Date);
+    expect(callArgs.items[0].description).toBe("First excerpt");
+    expect(callArgs.items[0].content).toBe("<p>Full first content</p>");
+    expect(callArgs.items[0].link).toBe("/dispatches/first-post");
   });
 
-  it("should handle empty collection", async () => {
+  it("should pass items as an array", async () => {
     const context = createContext("https://example.com") as any;
     await GET(context);
 

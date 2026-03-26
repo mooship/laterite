@@ -1,7 +1,12 @@
+import type { APIContext } from "astro";
+import { slugifyPath } from "./slugify";
+import { withBase } from "./url";
+
 export interface FeedItem {
   title: string;
   pubDate: Date;
   description: string;
+  content?: string;
   link: string;
 }
 
@@ -15,14 +20,27 @@ interface PostFrontmatter {
 
 interface PostModule {
   frontmatter: PostFrontmatter;
-  default: unknown;
+  compiledContent?: () => string;
 }
 
 function isValidDate(date: Date): boolean {
   return !Number.isNaN(date.getTime());
 }
 
-function processPost(path: string, post: unknown): FeedItem | null {
+export function escapeXml(str: string): string {
+  return str
+    .replaceAll("&", "&amp;")
+    .replaceAll("<", "&lt;")
+    .replaceAll(">", "&gt;")
+    .replaceAll('"', "&quot;")
+    .replaceAll("'", "&apos;");
+}
+
+export function resolveSiteUrl(context: APIContext): string {
+  return context.site ? new URL(context.site).toString().replace(/\/$/, "") : "http://localhost";
+}
+
+export function processPost(path: string, post: unknown): FeedItem | null {
   if (!post || typeof post !== "object") {
     return null;
   }
@@ -43,17 +61,15 @@ function processPost(path: string, post: unknown): FeedItem | null {
     return null;
   }
 
-  const slug =
-    path
-      .split("/")
-      .pop()
-      ?.replace(/\.(md|mdx)$/, "") || "";
+  const slug = slugifyPath(path);
+  const content = postData.compiledContent?.() || undefined;
 
   return {
     title: title || "Untitled",
     pubDate: date,
     description: excerpt || description || "",
-    link: `/dispatches/${slug}/`,
+    content,
+    link: withBase(`dispatches/${slug}`),
   };
 }
 

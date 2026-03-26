@@ -1,19 +1,14 @@
-import type { APIContext } from "astro";
 import { beforeEach, describe, expect, it, vi } from "vitest";
 import { GET } from "../../src/pages/feed.json.ts";
+import { createContext, mockConfig, mockFeedItems } from "./fixtures/feed-mocks";
 
-vi.mock("../../src/config", () => ({
-  config: {
-    title: "Test Site",
-    description: "Test Description",
-    author: { name: "Test Author", bio: "Test Bio" },
-  },
+vi.mock("../../src/config", () => ({ config: mockConfig }));
+
+vi.mock("../../src/utils/feed", () => ({
+  getFeedItems: () => mockFeedItems,
+  resolveSiteUrl: (ctx: any) =>
+    ctx.site ? new URL(ctx.site).toString().replace(/\/$/, "") : "http://localhost",
 }));
-
-const createContext = (site?: string): APIContext =>
-  ({
-    site: site ? new URL(site) : undefined,
-  }) as unknown as APIContext;
 
 describe("feed.json", () => {
   beforeEach(() => {
@@ -50,21 +45,19 @@ describe("feed.json", () => {
     expect(feed.authors).toEqual([{ name: "Test Author" }]);
   });
 
-  it("should include items with required JSON Feed fields", async () => {
+  it("should include items with required JSON Feed fields and full content", async () => {
     const context = createContext("https://example.com") as any;
     const response = await GET(context);
     const feed = await response.json();
 
-    expect(Array.isArray(feed.items)).toBe(true);
-    if (feed.items.length > 0) {
-      const item = feed.items[0];
-      expect(item).toHaveProperty("id");
-      expect(item).toHaveProperty("url");
-      expect(item).toHaveProperty("title");
-      expect(item).toHaveProperty("summary");
-      expect(item).toHaveProperty("date_published");
-      expect(item.url).toMatch(/^https:\/\/example\.com\/dispatches\//);
-    }
+    expect(feed.items).toHaveLength(2);
+    const item = feed.items[0];
+    expect(item.id).toBe("https://example.com/dispatches/first-post");
+    expect(item.url).toBe("https://example.com/dispatches/first-post");
+    expect(item.title).toBe("First Post");
+    expect(item.summary).toBe("First excerpt");
+    expect(item.content_html).toBe("<p>Full first content</p>");
+    expect(item.date_published).toBe("2025-03-01T00:00:00.000Z");
   });
 
   it("should sort items by date descending", async () => {
@@ -72,11 +65,9 @@ describe("feed.json", () => {
     const response = await GET(context);
     const feed = await response.json();
 
-    if (feed.items.length > 1) {
-      const dates = feed.items.map((item: any) => new Date(item.date_published).getTime());
-      for (let i = 0; i < dates.length - 1; i++) {
-        expect(dates[i]).toBeGreaterThanOrEqual(dates[i + 1]);
-      }
+    const dates = feed.items.map((item: any) => new Date(item.date_published).getTime());
+    for (let i = 0; i < dates.length - 1; i++) {
+      expect(dates[i]).toBeGreaterThanOrEqual(dates[i + 1]);
     }
   });
 

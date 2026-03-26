@@ -1,19 +1,18 @@
 import type { APIRoute } from "astro";
 import { config } from "../config";
-import { getFeedItems } from "../utils/feed";
+import { getFeedItems, resolveSiteUrl } from "../utils/feed";
+import { withBase } from "../utils/url";
 
 export const GET: APIRoute = async (context) => {
   const items = getFeedItems();
-  const siteUrl = context.site
-    ? new URL(context.site).toString().replace(/\/$/, "")
-    : "http://localhost";
+  const siteUrl = resolveSiteUrl(context);
 
   const feed = {
     version: "https://jsonfeed.org/version/1.1",
     title: config.title,
     description: config.description,
-    home_page_url: `${siteUrl}/`,
-    feed_url: `${siteUrl}/feed.json`,
+    home_page_url: `${siteUrl}${withBase("")}`,
+    feed_url: `${siteUrl}${withBase("feed.json")}`,
     language: "en-GB",
     authors: [{ name: config.author.name }],
     items: items.map((item) => ({
@@ -21,6 +20,7 @@ export const GET: APIRoute = async (context) => {
       url: `${siteUrl}${item.link}`,
       title: item.title,
       summary: item.description,
+      content_html: item.content,
       date_published: item.pubDate.toISOString(),
     })),
   };

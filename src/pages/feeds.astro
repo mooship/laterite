@@ -1,8 +1,7 @@
 ---
 import Layout from "../components/Layout.astro";
 import { config } from "../config";
-
-const base = Astro.site ? config.baseUrl : "";
+import { withBase } from "../utils/url";
 ---
 
 <Layout
@@ -21,7 +20,7 @@ const base = Astro.site ? config.baseUrl : "";
     </p>
 
     <div class="feed-options">
-      <a href={base + "rss.xml"} class="feed-card">
+      <a href={withBase("rss.xml")} class="feed-card">
         <svg
           class="feed-icon"
           viewBox="0 0 24 24"
@@ -39,7 +38,7 @@ const base = Astro.site ? config.baseUrl : "";
         <span class="feed-url">rss.xml</span>
       </a>
 
-      <a href={base + "atom.xml"} class="feed-card">
+      <a href={withBase("atom.xml")} class="feed-card">
         <svg
           class="feed-icon"
           viewBox="0 0 24 24"
@@ -83,7 +82,7 @@ const base = Astro.site ? config.baseUrl : "";
         <span class="feed-url">atom.xml</span>
       </a>
 
-      <a href={base + "feed.json"} class="feed-card">
+      <a href={withBase("feed.json")} class="feed-card">
         <svg
           class="feed-icon"
           viewBox="0 0 24 24"

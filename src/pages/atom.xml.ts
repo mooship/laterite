@@ -1,22 +1,14 @@
 import type { APIRoute } from "astro";
 import { config } from "../config";
-import { getFeedItems } from "../utils/feed";
-
-function escapeXml(str: string): string {
-  return str
-    .replaceAll("&", "&amp;")
-    .replaceAll("<", "&lt;")
-    .replaceAll(">", "&gt;")
-    .replaceAll('"', "&quot;")
-    .replaceAll("'", "&apos;");
-}
+import { escapeXml, getFeedItems, resolveSiteUrl } from "../utils/feed";
+import { withBase } from "../utils/url";
 
 export const GET: APIRoute = async (context) => {
   const items = getFeedItems();
-  const siteUrl = context.site
-    ? new URL(context.site).toString().replace(/\/$/, "")
-    : "http://localhost";
+  const siteUrl = resolveSiteUrl(context);
   const updated = items.length > 0 ? items[0].pubDate.toISOString() : new Date().toISOString();
+  const selfUrl = `${siteUrl}${withBase("atom.xml")}`;
+  const alternateUrl = `${siteUrl}${withBase("")}`;
 
   const entries = items
     .map(
@@ -25,7 +17,7 @@ export const GET: APIRoute = async (context) => {
     <link href="${siteUrl}${item.link}" rel="alternate" type="text/html"/>
     <id>${siteUrl}${item.link}</id>
     <updated>${item.pubDate.toISOString()}</updated>
-    <summary>${escapeXml(item.description)}</summary>
+    <summary>${escapeXml(item.description)}</summary>${item.content ? `\n    <content type="html"><![CDATA[${item.content}]]></content>` : ""}
   </entry>`
     )
     .join("\n");
@@ -34,9 +26,9 @@ export const GET: APIRoute = async (context) => {
 <feed xmlns="http://www.w3.org/2005/Atom">
   <title>${escapeXml(config.title)}</title>
   <subtitle>${escapeXml(config.description)}</subtitle>
-  <link href="${siteUrl}/atom.xml" rel="self" type="application/atom+xml"/>
-  <link href="${siteUrl}/" rel="alternate" type="text/html"/>
-  <id>${siteUrl}/</id>
+  <link href="${selfUrl}" rel="self" type="application/atom+xml"/>
+  <link href="${alternateUrl}" rel="alternate" type="text/html"/>
+  <id>${alternateUrl}</id>
   <updated>${updated}</updated>
   <author>
     <name>${escapeXml(config.author.name)}</name>
