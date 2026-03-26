@@ -1,5 +1,6 @@
 ---
 import { config } from "../config";
+import { withBase } from "../utils/url";
 
 const ogImageUrl = new URL("images/og-image.webp", Astro.site).toString();
 
@@ -102,17 +103,22 @@ const imageURL = new URL(image.replace(/^\//, ""), Astro.site);
         }),
   })}
 />
-<link rel="alternate" type="application/rss+xml" title={`${config.title} (RSS)`} href="/rss.xml" />
+<link
+  rel="alternate"
+  type="application/rss+xml"
+  title={`${config.title} (RSS)`}
+  href={withBase("rss.xml")}
+/>
 <link
   rel="alternate"
   type="application/atom+xml"
   title={`${config.title} (Atom)`}
-  href="/atom.xml"
+  href={withBase("atom.xml")}
 />
 <link
   rel="alternate"
   type="application/feed+json"
   title={`${config.title} (JSON Feed)`}
-  href="/feed.json"
+  href={withBase("feed.json")}
 />
 <link rel="sitemap" type="application/xml" href="/sitemap-index.xml" />
