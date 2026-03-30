@@ -79,12 +79,16 @@
   }
 
   function trapFocus(e: KeyboardEvent) {
-    if (e.key !== "Tab" || !searchOverlay) return;
+    if (e.key !== "Tab" || !searchOverlay) {
+      return;
+    }
 
     const focusable = searchOverlay.querySelectorAll<HTMLElement>(
       'a[href], button, input, [tabindex]:not([tabindex="-1"])'
     );
-    if (focusable.length === 0) return;
+    if (focusable.length === 0) {
+      return;
+    }
 
     const first = focusable[0];
     const last = focusable.at(-1);
