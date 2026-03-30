@@ -154,7 +154,9 @@ const { sections, ariaLabel = "Category navigation" } = Astro.props;
   }
 
   .bookmark-list a {
-    display: inline-block;
+    display: inline-flex;
+    align-items: center;
+    min-height: 44px;
     padding: calc(var(--grid-unit) * 1) calc(var(--grid-unit) * 2);
     background: var(--color-surface);
     border: 1px solid var(--color-border);

@@ -142,6 +142,7 @@ const base = Astro.site ? config.baseUrl : "";
         mobileMenu.classList.remove("active");
         hamburgerToggle.setAttribute("aria-expanded", "false");
         body.style.overflow = "";
+        (hamburgerToggle as HTMLElement).focus();
       }
     });
   }
@@ -209,10 +210,8 @@ const base = Astro.site ? config.baseUrl : "";
     justify-content: center;
   }
 
-  .search-toggle:hover,
-  .search-toggle:focus {
+  .search-toggle:hover {
     color: var(--color-accent);
-    outline: none;
   }
 
   .visually-hidden {
@@ -263,11 +262,8 @@ const base = Astro.site ? config.baseUrl : "";
   }
 
   .hamburger-toggle:hover,
-  .hamburger-toggle:focus,
-  .rss-toggle:hover,
-  .rss-toggle:focus {
+  .rss-toggle:hover {
     color: var(--color-accent);
-    outline: none;
   }
 
   @media (max-width: 768px) {
@@ -323,6 +319,8 @@ const base = Astro.site ? config.baseUrl : "";
     .rss-toggle,
     .search-toggle {
       padding: calc(var(--grid-unit) * 0.75);
+      min-width: 44px;
+      min-height: 44px;
     }
   }
 
@@ -349,6 +347,8 @@ const base = Astro.site ? config.baseUrl : "";
     .rss-toggle,
     .search-toggle {
       padding: calc(var(--grid-unit) * 0.5);
+      min-width: 44px;
+      min-height: 44px;
     }
   }
 

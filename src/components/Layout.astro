@@ -54,9 +54,10 @@ const {
     />
   </head>
   <body>
+    <a href="#main-content" class="skip-link">Skip to content</a>
     <div class="site-wrapper">
       <Header />
-      <main class="main-content" class:list={{ "with-sidebar": showSidebar }}>
+      <main id="main-content" class="main-content" class:list={{ "with-sidebar": showSidebar }}>
         {
           showSidebar && (
             <aside class="sidebar">
@@ -74,6 +75,22 @@ const {
 </html>
 
 <style>
+  .skip-link {
+    position: absolute;
+    top: -100%;
+    left: 0;
+    z-index: 9999;
+    padding: 1rem;
+    background: var(--color-accent);
+    color: var(--color-background);
+    font-weight: 700;
+    text-decoration: none;
+  }
+
+  .skip-link:focus {
+    top: 0;
+  }
+
   .site-wrapper {
     display: flex;
     flex-direction: column;
