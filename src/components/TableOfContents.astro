@@ -126,8 +126,11 @@ const { headings } = Astro.props;
         const targetElement = targetId ? document.querySelector(`#${targetId}`) : null;
 
         if (targetElement) {
+          const prefersReducedMotion = window.matchMedia(
+            "(prefers-reduced-motion: reduce)"
+          ).matches;
           targetElement.scrollIntoView({
-            behavior: "smooth",
+            behavior: prefersReducedMotion ? "instant" : "smooth",
             block: "start",
           });
 
@@ -148,8 +151,10 @@ const { headings } = Astro.props;
         if (tocLink && entry.isIntersecting) {
           for (const link of document.querySelectorAll(".toc-link")) {
             link.classList.remove("active");
+            link.removeAttribute("aria-current");
           }
           tocLink.classList.add("active");
+          tocLink.setAttribute("aria-current", "true");
         }
       }
     };
