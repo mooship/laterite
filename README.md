@@ -33,9 +33,9 @@ Prerequisites: Node.js 22.21.1 or higher, Git.
 ```bash
 git clone https://github.com/theredsoil/laterite.git
 cd laterite
-npm install
-npx lefthook install  # set up git hooks
-npm run dev
+pnpm install
+pnpm exec lefthook install  # set up git hooks
+pnpm run dev
 ```
 
 Local dev server: `http://localhost:4321`
@@ -67,15 +67,15 @@ For editorial and submission standards, read `EDITORIAL_GUIDELINES.md`.
 
 All commands are run from the project root.
 
-| Command           | Action                                     |
-| ----------------- | ------------------------------------------ |
-| `npm install`     | Install dependencies                       |
-| `npm run dev`     | Start local dev server at `localhost:4321` |
-| `npm run build`   | Build production site to `./dist/`         |
-| `npm run preview` | Preview local production build             |
-| `npm run check`   | Check TypeScript types                     |
-| `npm run format`  | Format code with Prettier                  |
-| `npm run test`    | Run tests with Vitest                      |
+| Command            | Action                                     |
+| ------------------ | ------------------------------------------ |
+| `pnpm install`     | Install dependencies                       |
+| `pnpm run dev`     | Start local dev server at `localhost:4321` |
+| `pnpm run build`   | Build production site to `./dist/`         |
+| `pnpm run preview` | Preview local production build             |
+| `pnpm run check`   | Check TypeScript types                     |
+| `pnpm run format`  | Format code with Prettier                  |
+| `pnpm run test`    | Run tests with Vitest                      |
 
 ## Deployment
 
@@ -86,7 +86,7 @@ Build the site and deploy the `dist/` folder to any static hosting service.
 Contributions are welcome for both code and content.
 
 - Add posts in `src/content/dispatches/` with the required frontmatter
-- Run `npm run check` and `npm run test` before opening a pull request
+- Run `pnpm run check` and `pnpm run test` before opening a pull request
 - Follow commit prefixes: `Add:`, `Fix:`, `Update:`, `Remove:`, `Docs:`
 - Follow the editorial standards in `EDITORIAL_GUIDELINES.md`
 

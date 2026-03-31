@@ -51,8 +51,8 @@ Content should align with the site's focus on:
 
 1. Fork the repository
 2. Clone your fork: `git clone https://github.com/yourusername/laterite.git`
-3. Install dependencies: `npm install`
-4. Start development server: `npm run dev`
+3. Install dependencies: `pnpm install`
+4. Start development server: `pnpm run dev`
 
 ### Code Standards
 
@@ -66,9 +66,9 @@ Content should align with the site's focus on:
 
 1. Create a feature branch: `git checkout -b feature/your-feature-name`
 2. Make your changes and test thoroughly
-3. Run linting: `npm run lint`
-4. Run type checking: `npm run check`
-5. Format code: `npm run format`
+3. Run linting: `pnpm run lint`
+4. Run type checking: `pnpm run check`
+5. Format code: `pnpm run format`
 6. Commit your changes: `git commit -m "Add: brief description of changes"`
 7. Push to your fork: `git push origin feature/your-feature-name`
 8. Create a Pull Request with a clear description
