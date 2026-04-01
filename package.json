@@ -20,7 +20,7 @@
     "@astrojs/mdx": "^5.0.2",
     "@astrojs/rss": "^4.0.18",
     "@astrojs/sitemap": "^3.7.2",
-    "@eslint/css": "^1.0.0",
+    "@eslint/css": "^1.1.0",
     "@eslint/markdown": "^8.0.1",
     "astro": "^6.1.2",
     "eslint": "^10.1.0",
