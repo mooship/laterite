@@ -16,6 +16,7 @@ export interface Props {
   datePublished?: string;
   dateModified?: string;
   canonical?: string;
+  robots?: string;
 }
 
 const {
@@ -27,6 +28,7 @@ const {
   datePublished,
   dateModified,
   canonical,
+  robots,
 } = Astro.props;
 ---
 
@@ -51,6 +53,7 @@ const {
       datePublished={datePublished}
       dateModified={dateModified}
       canonical={canonical}
+      robots={robots}
     />
   </head>
   <body>

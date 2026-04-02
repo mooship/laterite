@@ -19,7 +19,7 @@ describe("search.json", () => {
           excerpt: "Test excerpt 1",
           categories: ["category1"],
         },
-        slug: "test-post-1",
+        id: "test-post-1",
       },
       {
         data: {
@@ -28,7 +28,7 @@ describe("search.json", () => {
           description: "Test description 2",
           categories: ["category2"],
         },
-        slug: "test-post-2",
+        id: "test-post-2",
       },
     ];
 
@@ -63,7 +63,7 @@ describe("search.json", () => {
           title: "Untitled Post",
           datePublished: new Date("2023-01-01"),
         },
-        slug: "untitled-post",
+        id: "untitled-post",
       },
     ];
 
@@ -83,7 +83,7 @@ describe("search.json", () => {
           datePublished: new Date("2023-01-01"),
           excerpt: "Old",
         },
-        slug: "older",
+        id: "older",
       },
       {
         data: {
@@ -91,7 +91,7 @@ describe("search.json", () => {
           datePublished: new Date("2023-01-03"),
           excerpt: "New",
         },
-        slug: "newer",
+        id: "newer",
       },
     ];
 
@@ -111,7 +111,7 @@ describe("search.json", () => {
           datePublished: "invalid-date",
           excerpt: "Invalid",
         },
-        slug: "invalid-date",
+        id: "invalid-date",
       },
       {
         data: {
@@ -119,7 +119,7 @@ describe("search.json", () => {
           datePublished: "2023-01-02T00:00:00.000Z",
           excerpt: "Valid",
         },
-        slug: "valid",
+        id: "valid",
       },
     ];
 
@@ -144,7 +144,7 @@ describe("search.json", () => {
   it("should handle posts with no data property", async () => {
     const mockPosts = [
       {
-        slug: "no-data-post",
+        id: "no-data-post",
       } as any,
     ];
 
@@ -164,7 +164,7 @@ describe("search.json", () => {
           excerpt: "Past excerpt",
           draft: false,
         },
-        slug: "past-post",
+        id: "past-post",
       },
       {
         data: {
@@ -173,7 +173,7 @@ describe("search.json", () => {
           excerpt: "Future excerpt",
           draft: false,
         },
-        slug: "future-post",
+        id: "future-post",
       },
       {
         data: {
@@ -182,7 +182,7 @@ describe("search.json", () => {
           excerpt: "Draft excerpt",
           draft: true,
         },
-        slug: "draft-post",
+        id: "draft-post",
       },
     ];
 

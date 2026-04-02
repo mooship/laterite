@@ -14,6 +14,7 @@ export interface Props {
   categories?: string[];
   tags?: string[];
   canonical?: string;
+  robots?: string;
 }
 
 const {
@@ -26,6 +27,7 @@ const {
   categories,
   tags,
   canonical,
+  robots = "index, follow",
 } = Astro.props;
 
 const pageTitle = title.includes(config.title) ? title : `${title} | ${config.title}`;
@@ -59,8 +61,8 @@ const imageURL = new URL(image.replace(/^\//, ""), Astro.site);
 <meta name="twitter:title" content={pageTitle} />
 <meta name="twitter:description" content={description} />
 <meta name="twitter:image" content={imageURL.toString()} />
-<meta name="robots" content="index, follow" />
-<meta name="googlebot" content="index, follow" />
+<meta name="robots" content={robots} />
+<meta name="googlebot" content={robots} />
 <script
   type="application/ld+json"
   set:html={JSON.stringify({

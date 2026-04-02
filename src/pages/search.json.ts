@@ -34,7 +34,7 @@ function processPost(post: CollectionEntry<"dispatches">): SearchResult | null {
 
   return {
     title: post.data.title || "Untitled",
-    url: `/dispatches/${post.slug}`,
+    url: `/dispatches/${post.id}`,
     datePublished,
     excerpt: post.data.excerpt || post.data.description || "",
     categories: Array.isArray(post.data.categories) ? post.data.categories : [],
