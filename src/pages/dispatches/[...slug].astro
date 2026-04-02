@@ -295,8 +295,8 @@ const dateModified = frontmatter.dateModified
   }
 
   .post-content :global(pre) {
-    background-color: #000000;
-    color: #ffffff;
+    background-color: var(--code-bg);
+    color: var(--code-text);
     padding: calc(var(--grid-unit) * 3);
     margin: calc(var(--grid-unit) * 4) 0;
     border-radius: 8px;
@@ -316,7 +316,7 @@ const dateModified = frontmatter.dateModified
 
   .post-content :global(.token.selector),
   .post-content :global(.token.tag) {
-    color: #ffd700 !important;
+    color: var(--code-keyword) !important;
   }
 
   .post-content :global(.token.property),
@@ -328,33 +328,33 @@ const dateModified = frontmatter.dateModified
   .post-content :global(.token.punctuation),
   .post-content :global(.token.brace),
   .post-content :global(.token.bracket) {
-    color: #cccccc !important;
+    color: var(--code-punctuation) !important;
   }
 
   .post-content :global(.token.string),
   .post-content :global(.token.attr-value),
   .post-content :global(.token.url) {
-    color: #ffcc00 !important;
+    color: var(--code-string) !important;
   }
 
   .post-content :global(.token.comment) {
-    color: #888888 !important;
+    color: var(--code-comment) !important;
     font-style: italic;
   }
 
   .post-content :global(.token.number),
   .post-content :global(.token.boolean) {
-    color: #66d9ef !important;
+    color: var(--code-number) !important;
   }
 
   .post-content :global(pre[class*="language-"]) {
-    background: #000000 !important;
-    color: #ffffff !important;
+    background: var(--code-bg) !important;
+    color: var(--code-text) !important;
   }
 
   .post-content :global(code[class*="language-"]) {
-    background: #000000 !important;
-    color: #ffffff !important;
+    background: var(--code-bg) !important;
+    color: var(--code-text) !important;
   }
 
   .post-content :global(code) {
