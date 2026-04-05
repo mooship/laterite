@@ -17,7 +17,7 @@ const sortedPosts = sortByDateDesc(filterPublished(getAllPosts()));
         Critical eco-socialist and decolonial analysis from Africa and the Global South — exposing
         the systems that exploit both people and the planet.
       </p>
-      <hr class="dispatches-rule" />
+      <hr class="page-rule" />
     </header>
 
     {
@@ -52,7 +52,7 @@ const sortedPosts = sortByDateDesc(filterPublished(getAllPosts()));
               {post.frontmatter.categories && (
                 <div class="post-categories">
                   {post.frontmatter.categories.map((category: string) => (
-                    <span class="category">{category}</span>
+                    <span class="post-category">{category}</span>
                   ))}
                 </div>
               )}
@@ -111,46 +111,10 @@ const sortedPosts = sortByDateDesc(filterPublished(getAllPosts()));
     margin-right: auto;
   }
 
-  .dispatches-rule {
-    height: 4px;
-    background-color: var(--color-accent);
-    border: none;
-    width: 120px;
-    margin: 0 auto;
-  }
-
   .posts-list {
     display: flex;
     flex-direction: column;
     gap: calc(var(--grid-unit) * 6);
-  }
-
-  .post-item {
-    border-bottom: 1px solid var(--color-border);
-    padding-bottom: calc(var(--grid-unit) * 4);
-  }
-
-  .post-item:last-child {
-    border-bottom: none;
-    padding-bottom: 0;
-  }
-
-  .post-title {
-    font-family: var(--font-heading-secondary);
-    font-size: 2rem;
-    font-weight: 700;
-    margin-bottom: calc(var(--grid-unit) * 2);
-  }
-
-  .post-title a {
-    color: var(--color-text-primary);
-    text-decoration: none;
-    transition: color 0.2s ease;
-  }
-
-  .post-title a:hover,
-  .post-title a:focus {
-    color: var(--color-accent);
   }
 
   .post-meta {
@@ -180,72 +144,6 @@ const sortedPosts = sortByDateDesc(filterPublished(getAllPosts()));
     font-variant-numeric: tabular-nums;
   }
 
-  .post-date {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .post-author {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .post-reading-time {
-    font-family: var(--font-mono);
-    font-size: 0.9rem;
-    color: var(--color-text-muted);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-  }
-
-  .post-categories {
-    display: flex;
-    flex-wrap: wrap;
-    gap: calc(var(--grid-unit) / 2);
-    margin-bottom: calc(var(--grid-unit) * 3);
-  }
-
-  .category {
-    background-color: var(--color-text-primary);
-    color: var(--color-background);
-    padding: calc(var(--grid-unit) / 4) calc(var(--grid-unit) / 2);
-    font-size: 0.75rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-radius: 2px;
-    border: 1px solid var(--color-text-primary);
-  }
-
-  .post-excerpt {
-    color: var(--color-text-secondary);
-    line-height: 1.6;
-    margin-bottom: calc(var(--grid-unit) * 2);
-    font-size: 1.1rem;
-  }
-
-  .read-more {
-    font-family: var(--font-heading-secondary);
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    color: var(--color-accent);
-    text-decoration: none;
-    font-size: 0.9rem;
-    transition: color 0.2s ease;
-  }
-
-  .read-more:hover,
-  .read-more:focus {
-    color: var(--color-text-primary);
-  }
-
   .no-posts {
     text-align: center;
     padding: calc(var(--grid-unit) * 6);
@@ -267,10 +165,6 @@ const sortedPosts = sortByDateDesc(filterPublished(getAllPosts()));
 
     .dispatches-description {
       font-size: 1.125rem;
-    }
-
-    .post-title {
-      font-size: 1.75rem;
     }
 
     .post-meta {

@@ -11,7 +11,7 @@ const recentPosts = sortByDateDesc(filterPublished(getAllPosts())).slice(0, RECE
 {
   recentPosts.length > 0 && (
     <section class="recent-posts">
-      <h3 class="section-title">Recent Posts</h3>
+      <h3 class="sidebar-section-title">Recent Posts</h3>
       <ul class="post-list">
         {recentPosts.map((post) => (
           <li class="post-item">
@@ -39,18 +39,6 @@ const recentPosts = sortByDateDesc(filterPublished(getAllPosts())).slice(0, RECE
 <style>
   .recent-posts {
     margin-bottom: calc(var(--grid-unit) * 4);
-  }
-
-  .section-title {
-    font-family: var(--font-heading-secondary);
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--color-accent);
-    margin-bottom: calc(var(--grid-unit) * 1.5);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-bottom: 2px solid var(--color-accent);
-    padding-bottom: calc(var(--grid-unit) / 2);
   }
 
   .post-list {
