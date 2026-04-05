@@ -1,0 +1,25 @@
+---
+interface Props {
+  datePublished: string;
+  author?: string;
+  minutesRead?: string;
+}
+
+const { datePublished, author, minutesRead } = Astro.props;
+---
+
+<div class="post-meta">
+  <time class="post-date" datetime={datePublished}>
+    {
+      new Date(datePublished).toLocaleDateString("en-GB", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      })
+    }
+  </time>
+
+  {author && <span class="post-author">By {author}</span>}
+
+  {minutesRead && <span class="post-reading-time">{minutesRead}</span>}
+</div>

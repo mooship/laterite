@@ -1,5 +1,6 @@
 ---
 import Layout from "../../components/Layout.astro";
+import PostMeta from "../../components/PostMeta.astro";
 import { config } from "../../config";
 import { filterPublished, getAllPosts, sortByDateDesc } from "../../utils/posts";
 import { slugifyPath } from "../../utils/slugify";
@@ -55,15 +56,7 @@ const base = config.baseUrl;
               </a>
             </h2>
 
-            <div class="post-meta">
-              <time class="post-date" datetime={post.frontmatter.datePublished}>
-                {new Date(post.frontmatter.datePublished).toLocaleDateString("en-GB", {
-                  year: "numeric",
-                  month: "long",
-                  day: "numeric",
-                })}
-              </time>
-            </div>
+            <PostMeta datePublished={post.frontmatter.datePublished} />
 
             {post.frontmatter.excerpt && <p class="post-excerpt">{post.frontmatter.excerpt}</p>}
 

@@ -1,5 +1,6 @@
 ---
 import Layout from "../components/Layout.astro";
+import PostMeta from "../components/PostMeta.astro";
 import { config } from "../config";
 import { filterPublished, getAllPosts, sortByDateDesc } from "../utils/posts";
 import { slugifyPath } from "../utils/slugify";
@@ -31,21 +32,11 @@ const sortedPosts = sortByDateDesc(filterPublished(getAllPosts()));
                 </a>
               </h2>
 
-              <div class="post-meta">
-                <time class="post-date" datetime={post.frontmatter.datePublished}>
-                  {new Date(post.frontmatter.datePublished).toLocaleDateString("en-GB", {
-                    year: "numeric",
-                    month: "long",
-                    day: "numeric",
-                  })}
-                </time>
-
-                {post.frontmatter.author && (
-                  <span class="post-author">By {post.frontmatter.author}</span>
-                )}
-
-                <span class="post-reading-time">{post.frontmatter.minutesRead}</span>
-              </div>
+              <PostMeta
+                datePublished={post.frontmatter.datePublished}
+                author={post.frontmatter.author}
+                minutesRead={post.frontmatter.minutesRead}
+              />
 
               {post.frontmatter.excerpt && <p class="post-excerpt">{post.frontmatter.excerpt}</p>}
 
