@@ -1,28 +1,18 @@
 ---
+import { filterPublished, getAllPosts } from "../utils/posts";
 import { categoryPath } from "../utils/url";
 
-const allPosts = Object.values(
-  import.meta.glob("../content/dispatches/*.{md,mdx}", { eager: true })
-)
-  .filter((post: any) => post && post.frontmatter && !post.frontmatter.draft)
-  .filter((post: any) => {
-    const rawDate = post.frontmatter.datePublished;
-    const date = new Date(rawDate);
-    if (Number.isNaN(date.getTime())) {
-      return false;
-    }
-    return date <= new Date();
-  }) as any[];
+const publishedPosts = filterPublished(getAllPosts());
 
 const categories = [
-  ...new Set(allPosts.flatMap((post: any) => post.frontmatter?.categories || [])),
+  ...new Set(publishedPosts.flatMap((post) => post.frontmatter.categories ?? [])),
 ];
 ---
 
 {
   categories.length > 0 && (
     <section class="categories">
-      <h3 class="section-title">Categories</h3>
+      <h3 class="sidebar-section-title">Categories</h3>
       <ul class="category-list">
         {categories.map((category) => (
           <li class="category-item">
@@ -37,18 +27,6 @@ const categories = [
 }
 
 <style>
-  .section-title {
-    font-family: var(--font-heading-secondary);
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--color-accent);
-    margin-bottom: calc(var(--grid-unit) * 1.5);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-bottom: 2px solid var(--color-accent);
-    padding-bottom: calc(var(--grid-unit) / 2);
-  }
-
   .category-list {
     list-style: none;
     margin: 0;

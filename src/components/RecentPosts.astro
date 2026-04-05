@@ -1,34 +1,17 @@
 ---
 import { config } from "../config";
+import { filterPublished, getAllPosts, RECENT_POSTS_LIMIT, sortByDateDesc } from "../utils/posts";
 import { slugifyPath } from "../utils/slugify";
 
 const base = config.baseUrl;
 
-const allPosts = Object.values(
-  import.meta.glob("../content/dispatches/*.{md,mdx}", { eager: true })
-) as any[];
-const recentPosts = allPosts
-  .filter((post: any) => !post.frontmatter.draft)
-  .filter((post: any) => {
-    const rawDate = post.frontmatter.datePublished;
-    const date = new Date(rawDate);
-    if (Number.isNaN(date.getTime())) {
-      return false;
-    }
-    return date <= new Date();
-  })
-  .toSorted(
-    (a: any, b: any) =>
-      new Date(b.frontmatter.datePublished).getTime() -
-      new Date(a.frontmatter.datePublished).getTime()
-  )
-  .slice(0, 5);
+const recentPosts = sortByDateDesc(filterPublished(getAllPosts())).slice(0, RECENT_POSTS_LIMIT);
 ---
 
 {
   recentPosts.length > 0 && (
     <section class="recent-posts">
-      <h3 class="section-title">Recent Posts</h3>
+      <h3 class="sidebar-section-title">Recent Posts</h3>
       <ul class="post-list">
         {recentPosts.map((post) => (
           <li class="post-item">
@@ -56,18 +39,6 @@ const recentPosts = allPosts
 <style>
   .recent-posts {
     margin-bottom: calc(var(--grid-unit) * 4);
-  }
-
-  .section-title {
-    font-family: var(--font-heading-secondary);
-    font-size: 1.1rem;
-    font-weight: 700;
-    color: var(--color-accent);
-    margin-bottom: calc(var(--grid-unit) * 1.5);
-    text-transform: uppercase;
-    letter-spacing: 0.05em;
-    border-bottom: 2px solid var(--color-accent);
-    padding-bottom: calc(var(--grid-unit) / 2);
   }
 
   .post-list {

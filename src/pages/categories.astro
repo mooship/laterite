@@ -1,25 +1,22 @@
 ---
 import Layout from "../components/Layout.astro";
+import { filterPublished, getAllPosts } from "../utils/posts";
+import type { Post } from "../utils/posts";
 import { categoryPath } from "../utils/url";
 
-const allPosts = Object.values(
-  import.meta.glob("../content/dispatches/*.{md,mdx}", { eager: true })
-)
-  .filter((post: any) => !post.frontmatter.draft)
-  .filter((post: any) => {
-    const date = new Date(post.frontmatter.datePublished);
-    return !Number.isNaN(date.getTime()) && date <= new Date();
-  }) as any[];
+const publishedPosts = filterPublished(getAllPosts());
 
-const categoryMap: Record<string, any[]> = {};
-for (const post of allPosts) {
+const categoryMap: Record<string, Post[]> = {};
+for (const post of publishedPosts) {
   for (const category of post.frontmatter.categories ?? []) {
-    if (!categoryMap[category]) categoryMap[category] = [];
+    if (!categoryMap[category]) {
+      categoryMap[category] = [];
+    }
     categoryMap[category].push(post);
   }
 }
 
-const sortedCategories = Object.entries(categoryMap).toSorted((a: any, b: any) => {
+const sortedCategories = Object.entries(categoryMap).toSorted((a, b) => {
   if (b[1].length !== a[1].length) {
     return b[1].length - a[1].length;
   }
@@ -92,14 +89,6 @@ const sortedCategories = Object.entries(categoryMap).toSorted((a: any, b: any) =
     color: var(--color-text-secondary);
     max-width: 600px;
     margin: 0 auto calc(var(--grid-unit) * 3);
-  }
-
-  .page-rule {
-    height: 4px;
-    background-color: var(--color-accent);
-    border: none;
-    width: 120px;
-    margin: 0 auto;
   }
 
   .categories-grid {

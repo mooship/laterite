@@ -1,4 +1,6 @@
 ---
+import { config } from "../config";
+
 interface Props {
   base: string;
 }
@@ -8,19 +10,15 @@ const { base } = Astro.props;
 
 <nav class="main-navigation" role="navigation" aria-label="Main navigation">
   <ul class="nav-list">
-    <li><a href={base} data-astro-prefetch class="nav-link">Home</a></li>
-    <li>
-      <a href={base + "dispatches"} data-astro-prefetch class="nav-link">Dispatches</a>
-    </li>
-    <li>
-      <a href={base + "categories"} data-astro-prefetch class="nav-link">Categories</a>
-    </li>
-    <li>
-      <a href={base + "solidarity"} data-astro-prefetch class="nav-link">Solidarity</a>
-    </li>
-    <li>
-      <a href={base + "about"} data-astro-prefetch class="nav-link">About</a>
-    </li>
+    {
+      config.navigation.map((item) => (
+        <li>
+          <a href={base + item.path} data-astro-prefetch class="nav-link">
+            {item.label}
+          </a>
+        </li>
+      ))
+    }
   </ul>
 </nav>
 

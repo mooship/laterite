@@ -1,30 +1,11 @@
 ---
 import Layout from "../components/Layout.astro";
+import { filterPublished, getAllPosts, HOME_POSTS_LIMIT, sortByDateDesc } from "../utils/posts";
 import { slugifyPath } from "../utils/slugify";
 
-const allPosts = Object.entries(
-  import.meta.glob("../content/dispatches/*.{md,mdx}", { eager: true })
-).map(([path, post]) =>
-  typeof post === "object" && post !== null
-    ? { ...post, slug: slugifyPath(path) }
-    : { slug: slugifyPath(path) }
-) as any[];
-const sortedPosts = allPosts
-  .filter((post: any) => !post.frontmatter.draft)
-  .filter((post: any) => {
-    const rawDate = post.frontmatter.datePublished;
-    const date = new Date(rawDate);
-    if (Number.isNaN(date.getTime())) {
-      return false;
-    }
-    return date <= new Date();
-  })
-  .toSorted(
-    (a: any, b: any) =>
-      new Date(b.frontmatter.datePublished).getTime() -
-      new Date(a.frontmatter.datePublished).getTime()
-  )
-  .slice(0, 3);
+const sortedPosts = sortByDateDesc(filterPublished(getAllPosts()))
+  .map((post) => ({ ...post, slug: slugifyPath(post.file) }))
+  .slice(0, HOME_POSTS_LIMIT);
 ---
 
 <Layout

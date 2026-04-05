@@ -7,13 +7,13 @@
 >
   <div class="search-container">
     <div class="search-header">
+      <label for="search-input" class="sr-only">Search articles</label>
       <input
         type="text"
         class="search-input"
         id="search-input"
         placeholder="Search articles..."
         autocomplete="off"
-        aria-label="Search articles"
       />
       <button class="search-close" id="search-close" aria-label="Close search">
         <svg
@@ -148,55 +148,73 @@
     displayResults(results, query);
   }
 
+  function el<K extends keyof HTMLElementTagNameMap>(
+    tag: K,
+    className?: string
+  ): HTMLElementTagNameMap[K] {
+    const node = document.createElement(tag);
+    if (className) {
+      node.className = className;
+    }
+    return node;
+  }
+
   function displayResults(results: any[], query: string) {
+    if (!searchResults) {
+      return;
+    }
+    searchResults.innerHTML = "";
+
     if (results.length === 0) {
-      if (searchResults) {
-        searchResults.innerHTML = `
-          <div class="search-no-results">
-            <p>No articles found for "${query}"</p>
-          </div>
-        `;
-      }
+      const wrapper = el("div", "search-no-results");
+      const p = el("p");
+      p.textContent = `No articles found for "${query}"`;
+      wrapper.append(p);
+      searchResults.append(wrapper);
       return;
     }
 
-    const resultsHTML = results
-      .map(
-        (post: any) => `
-      <article class="search-result">
-        <h2 class="search-result-title">
-          <a href="${base}${post.url.slice(1)}">${post.title}</a>
-        </h2>
-        <time class="search-result-date">${new Date(post.datePublished).toLocaleDateString(
-          "en-GB",
-          {
-            year: "numeric",
-            month: "long",
-            day: "numeric",
-          }
-        )}</time>
-        ${post.excerpt ? `<p class="search-result-excerpt">${post.excerpt}</p>` : ""}
-        ${
-          post.categories
-            ? `
-          <div class="search-result-categories">
-            ${post.categories.map((cat: string) => `<span class="search-category">${cat}</span>`).join(" ")}
-          </div>
-        `
-            : ""
-        }
-      </article>
-    `
-      )
-      .join("");
+    const header = el("div", "search-results-header");
+    const headerP = el("p");
+    headerP.textContent = `Found ${results.length} article${results.length === 1 ? "" : "s"} for "${query}"`;
+    header.append(headerP);
+    searchResults.append(header);
 
-    if (searchResults) {
-      searchResults.innerHTML = `
-        <div class="search-results-header">
-          <p>Found ${results.length} article${results.length === 1 ? "" : "s"} for "${query}"</p>
-        </div>
-        ${resultsHTML}
-      `;
+    for (const post of results) {
+      const article = el("article", "search-result");
+
+      const h2 = el("h2", "search-result-title");
+      const link = el("a");
+      link.href = `${base}${post.url.slice(1)}`;
+      link.textContent = post.title;
+      h2.append(link);
+      article.append(h2);
+
+      const time = el("time", "search-result-date");
+      time.textContent = new Date(post.datePublished).toLocaleDateString("en-GB", {
+        year: "numeric",
+        month: "long",
+        day: "numeric",
+      });
+      article.append(time);
+
+      if (post.excerpt) {
+        const excerpt = el("p", "search-result-excerpt");
+        excerpt.textContent = post.excerpt;
+        article.append(excerpt);
+      }
+
+      if (post.categories) {
+        const cats = el("div", "search-result-categories");
+        for (const cat of post.categories) {
+          const span = el("span", "search-category");
+          span.textContent = cat;
+          cats.append(span);
+        }
+        article.append(cats);
+      }
+
+      searchResults.append(article);
     }
   }
 

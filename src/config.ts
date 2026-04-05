@@ -1,3 +1,8 @@
+export interface NavItem {
+  label: string;
+  path: string;
+}
+
 export interface SiteConfig {
   title: string;
   tagline: string;
@@ -11,6 +16,7 @@ export interface SiteConfig {
   };
   siteUrl: string;
   baseUrl: string;
+  navigation: NavItem[];
 }
 
 export const config: SiteConfig = {
@@ -28,4 +34,11 @@ export const config: SiteConfig = {
   },
   siteUrl: "https://theredsoil.co.za",
   baseUrl: "/",
+  navigation: [
+    { label: "Home", path: "" },
+    { label: "Dispatches", path: "dispatches" },
+    { label: "Categories", path: "categories" },
+    { label: "Solidarity", path: "solidarity" },
+    { label: "About", path: "about" },
+  ],
 };
