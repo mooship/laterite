@@ -1,28 +1,12 @@
 ---
 import Layout from "../components/Layout.astro";
 import { config } from "../config";
+import { filterPublished, getAllPosts, sortByDateDesc } from "../utils/posts";
 import { slugifyPath } from "../utils/slugify";
 
 const base = config.baseUrl;
 
-const allPosts = Object.values(
-  import.meta.glob("../content/dispatches/*.{md,mdx}", { eager: true })
-) as any[];
-const sortedPosts = allPosts
-  .filter((post: any) => !post.frontmatter.draft)
-  .filter((post: any) => {
-    const rawDate = post.frontmatter.datePublished;
-    const date = new Date(rawDate);
-    if (Number.isNaN(date.getTime())) {
-      return false;
-    }
-    return date.getTime() <= Date.now();
-  })
-  .toSorted(
-    (a: any, b: any) =>
-      new Date(b.frontmatter.datePublished).getTime() -
-      new Date(a.frontmatter.datePublished).getTime()
-  );
+const sortedPosts = sortByDateDesc(filterPublished(getAllPosts()));
 ---
 
 <Layout title="Dispatches | The Red Soil" description="All dispatches from The Red Soil">

@@ -1,21 +1,11 @@
 ---
+import { filterPublished, getAllPosts } from "../utils/posts";
 import { categoryPath } from "../utils/url";
 
-const allPosts = Object.values(
-  import.meta.glob("../content/dispatches/*.{md,mdx}", { eager: true })
-)
-  .filter((post: any) => post && post.frontmatter && !post.frontmatter.draft)
-  .filter((post: any) => {
-    const rawDate = post.frontmatter.datePublished;
-    const date = new Date(rawDate);
-    if (Number.isNaN(date.getTime())) {
-      return false;
-    }
-    return date <= new Date();
-  }) as any[];
+const publishedPosts = filterPublished(getAllPosts());
 
 const categories = [
-  ...new Set(allPosts.flatMap((post: any) => post.frontmatter?.categories || [])),
+  ...new Set(publishedPosts.flatMap((post) => post.frontmatter.categories ?? [])),
 ];
 ---
 

@@ -1,24 +1,14 @@
 ---
 import Layout from "../../components/Layout.astro";
 import { config } from "../../config";
+import { filterPublished, getAllPosts, sortByDateDesc } from "../../utils/posts";
 import { slugifyPath } from "../../utils/slugify";
 
 export async function getStaticPaths() {
-  const allPosts = Object.values(
-    import.meta.glob("../../content/dispatches/*.{md,mdx}", { eager: true })
-  )
-    .filter((post: any) => !post.frontmatter.draft)
-    .filter((post: any) => {
-      const rawDate = post.frontmatter.datePublished;
-      const date = new Date(rawDate);
-      if (Number.isNaN(date.getTime())) {
-        return false;
-      }
-      return date <= new Date();
-    }) as any[];
+  const publishedPosts = filterPublished(getAllPosts());
 
   const allCategories = new Set<string>();
-  for (const post of allPosts) {
+  for (const post of publishedPosts) {
     for (const category of post.frontmatter.categories ?? []) {
       allCategories.add(category);
     }
@@ -26,15 +16,9 @@ export async function getStaticPaths() {
 
   return [...allCategories].map((category: string) => {
     const categorySlug = category.toLowerCase().replaceAll(/[/\s]+/g, "-");
-    const postsInCategory = allPosts
-      .filter(
-        (post: any) => post.frontmatter.categories && post.frontmatter.categories.includes(category)
-      )
-      .toSorted(
-        (a: any, b: any) =>
-          new Date(b.frontmatter.datePublished).getTime() -
-          new Date(a.frontmatter.datePublished).getTime()
-      );
+    const postsInCategory = sortByDateDesc(
+      publishedPosts.filter((post) => post.frontmatter.categories?.includes(category))
+    );
 
     return {
       params: { category: categorySlug },

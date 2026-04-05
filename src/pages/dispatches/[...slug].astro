@@ -2,23 +2,13 @@
 import Layout from "../../components/Layout.astro";
 import TableOfContents from "../../components/TableOfContents.astro";
 import { config } from "../../config";
+import { filterPublished, getAllPosts } from "../../utils/posts";
 import { slugifyPath } from "../../utils/slugify";
 import { extractHeadings, filterHeadingsForTOC } from "../../utils/table-of-contents";
 import { categoryPath } from "../../utils/url";
 
 export async function getStaticPaths() {
-  const allPosts = Object.values(
-    import.meta.glob("../../content/dispatches/*.{md,mdx}", { eager: true })
-  )
-    .filter((post: any) => !post.frontmatter.draft)
-    .filter((post: any) => {
-      const rawDate = post.frontmatter.datePublished;
-      const date = new Date(rawDate);
-      if (Number.isNaN(date.getTime())) {
-        return false;
-      }
-      return date.getTime() <= Date.now();
-    }) as any[];
+  const allPosts = filterPublished(getAllPosts());
 
   return allPosts.map((post: any) => {
     const rawContent = post.body || post.rawContent?.() || "";
