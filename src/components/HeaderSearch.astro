@@ -153,12 +153,16 @@
     className?: string
   ): HTMLElementTagNameMap[K] {
     const node = document.createElement(tag);
-    if (className) node.className = className;
+    if (className) {
+      node.className = className;
+    }
     return node;
   }
 
   function displayResults(results: any[], query: string) {
-    if (!searchResults) return;
+    if (!searchResults) {
+      return;
+    }
     searchResults.innerHTML = "";
 
     if (results.length === 0) {

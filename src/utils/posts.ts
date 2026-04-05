@@ -33,9 +33,13 @@ export function getAllPosts(): Post[] {
 
 export function filterPublished(posts: Post[]): Post[] {
   return posts.filter((post) => {
-    if (post.frontmatter.draft) return false;
+    if (post.frontmatter.draft) {
+      return false;
+    }
     const date = new Date(post.frontmatter.datePublished);
-    if (Number.isNaN(date.getTime())) return false;
+    if (Number.isNaN(date.getTime())) {
+      return false;
+    }
     return date.getTime() <= Date.now();
   });
 }

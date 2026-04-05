@@ -9,7 +9,9 @@ const publishedPosts = filterPublished(getAllPosts());
 const categoryMap: Record<string, Post[]> = {};
 for (const post of publishedPosts) {
   for (const category of post.frontmatter.categories ?? []) {
-    if (!categoryMap[category]) categoryMap[category] = [];
+    if (!categoryMap[category]) {
+      categoryMap[category] = [];
+    }
     categoryMap[category].push(post);
   }
 }
