@@ -37,7 +37,9 @@ const currentYear = new Date().getFullYear();
   .footer-content {
     max-width: var(--max-width);
     margin: 0 auto;
-    padding: 0 var(--content-padding);
+    padding: 0 max(var(--content-padding), env(safe-area-inset-right)) 0
+      max(var(--content-padding), env(safe-area-inset-left));
+    padding-bottom: env(safe-area-inset-bottom, 0);
     display: flex;
     align-items: center;
     justify-content: space-between;
