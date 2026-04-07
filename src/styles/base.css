@@ -38,10 +38,11 @@ input {
 
 html {
   font-family: var(--font-body);
-  font-size: 16px;
+  font-size: 100%;
   line-height: 1.6;
   color: var(--color-text-primary);
   background-color: var(--color-background);
+  -webkit-tap-highlight-color: transparent;
 }
 
 body {

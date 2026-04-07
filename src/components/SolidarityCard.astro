@@ -25,17 +25,20 @@ const { title, description, url, ariaLabel } = Astro.props;
   .solidarity-card {
     background-color: var(--color-surface);
     border: 1px solid var(--color-border);
-    border-radius: 8px;
+    border-radius: 12px;
     padding: calc(var(--grid-unit) * 4);
     text-align: center;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
     transition:
       transform 0.3s ease,
-      border-color 0.3s ease;
+      border-color 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   .solidarity-card:hover {
     transform: translateY(-4px);
     border-color: var(--color-accent);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
   }
 
   .solidarity-title {
@@ -59,7 +62,7 @@ const { title, description, url, ariaLabel } = Astro.props;
     padding: calc(var(--grid-unit) * 1.5) calc(var(--grid-unit) * 3);
     background: var(--color-accent);
     color: white;
-    border-radius: 4px;
+    border-radius: 8px;
     text-decoration: none;
     font-weight: 700;
     text-transform: uppercase;
