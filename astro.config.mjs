@@ -34,11 +34,6 @@ export default defineConfig({
   prefetch: {
     defaultStrategy: "hover",
   },
-  image: {
-    service: {
-      entrypoint: "astro/assets/services/sharp",
-    },
-  },
   build: {
     assetsInlineLimit: 4096,
     cacheDir: "./.astro-cache",

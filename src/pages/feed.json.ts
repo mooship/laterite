@@ -25,7 +25,7 @@ export const GET: APIRoute = async (context) => {
     })),
   };
 
-  return new Response(JSON.stringify(feed, null, 2), {
+  return Response.json(feed, {
     headers: {
       "Content-Type": "application/feed+json; charset=utf-8",
     },
