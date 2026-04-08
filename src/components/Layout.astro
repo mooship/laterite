@@ -11,6 +11,7 @@ export interface Props {
   title: string;
   description?: string;
   showSidebar?: boolean;
+  preloadMonoFont?: boolean;
   image?: string;
   type?: "website" | "article";
   datePublished?: string;
@@ -23,6 +24,7 @@ const {
   title,
   description,
   showSidebar = true,
+  preloadMonoFont = false,
   image,
   type,
   datePublished,
@@ -48,7 +50,7 @@ const {
     <link rel="sitemap" href="/sitemap-index.xml" />
     <Font cssVariable="--font-oswald" preload />
     <Font cssVariable="--font-work-sans" preload />
-    <Font cssVariable="--font-jetbrains-mono" preload />
+    <Font cssVariable="--font-jetbrains-mono" preload={preloadMonoFont} />
     <SEO
       title={title}
       description={description}
@@ -64,7 +66,12 @@ const {
     <a href="#main-content" class="skip-link">Skip to content</a>
     <div class="site-wrapper">
       <Header />
-      <main id="main-content" class="main-content" class:list={{ "with-sidebar": showSidebar }}>
+      <main
+        id="main-content"
+        class="main-content"
+        class:list={{ "with-sidebar": showSidebar }}
+        aria-label="Main content"
+      >
         {
           showSidebar && (
             <aside class="sidebar">

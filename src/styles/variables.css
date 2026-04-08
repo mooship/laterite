@@ -23,8 +23,20 @@
 
   --grid-unit: 8px;
   --max-width: 1200px;
+  --content-width: 800px;
   --sidebar-width: 320px;
   --content-padding: calc(var(--grid-unit) * 3);
+
+  --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.1);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.1);
+
+  --transition-fast: 0.15s;
+  --transition-base: 0.2s;
+  --transition-slow: 0.3s;
+
+  --radius-sm: 4px;
+  --radius-md: 8px;
+  --radius-lg: 12px;
 
   --color-surface-alt: #eeeeee;
   --color-surface-hover: #e0e0e0;
@@ -50,5 +62,16 @@
 
     --color-surface-alt: #222222;
     --color-surface-hover: #2a2a2a;
+
+    --shadow-sm: 0 1px 3px rgba(0, 0, 0, 0.4);
+    --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.4);
+
+    --code-bg: #1e1e1e;
+    --code-text: #d4d4d4;
+    --code-keyword: #569cd6;
+    --code-string: #ce9178;
+    --code-punctuation: #808080;
+    --code-comment: #6a9955;
+    --code-number: #b5cea8;
   }
 }

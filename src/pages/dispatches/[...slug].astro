@@ -45,6 +45,7 @@ const dateModified = frontmatter.dateModified
   datePublished={datePublished}
   dateModified={dateModified}
   image={frontmatter.image}
+  preloadMonoFont
 >
   <article class="dispatches-post">
     <header class="post-header">
@@ -129,7 +130,7 @@ const dateModified = frontmatter.dateModified
 
 <style>
   .dispatches-post {
-    max-width: 800px;
+    max-width: var(--content-width);
     margin: 0 auto;
   }
 
@@ -446,7 +447,7 @@ const dateModified = frontmatter.dateModified
   .back-to-dispatches:hover,
   .back-to-dispatches:focus {
     background-color: var(--color-accent);
-    color: white;
+    color: var(--color-white);
     text-decoration: none;
   }
 

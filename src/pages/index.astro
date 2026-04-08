@@ -168,7 +168,7 @@ const sortedPosts = sortByDateDesc(filterPublished(getAllPosts()))
   }
 
   .hero-content {
-    max-width: 800px;
+    max-width: var(--content-width);
     margin: 0 auto;
     padding: 0 var(--content-padding);
   }
@@ -234,7 +234,7 @@ const sortedPosts = sortByDateDesc(filterPublished(getAllPosts()))
 
   .btn-primary {
     background-color: var(--color-accent);
-    color: white;
+    color: var(--color-white);
     border: 2px solid var(--color-accent);
   }
 
