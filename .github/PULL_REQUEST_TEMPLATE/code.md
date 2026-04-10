@@ -20,8 +20,8 @@ Describe your code changes and the motivation behind them.
 - [ ] I have run all tests
 - [ ] I have added tests for all new code
 - [ ] I have updated existing tests if needed
-- [ ] I have run `pnpm run lint` and `pnpm run check`
-- [ ] I have run `pnpm run format`
+- [ ] I have run `bun run lint` and `bun run check`
+- [ ] I have run `bun run format`
 - [ ] I have updated documentation if needed
 
 ## Additional Notes

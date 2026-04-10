@@ -19,12 +19,12 @@ bun run lint         # ESLint with auto-fix (src/ + scripts/)
 bun run link-check   # Validate external links
 ```
 
-Git hooks (via lefthook) run automatically on `git commit`: Prettier formats and ESLint auto-fixes staged files, then re-stages them. To install hooks after cloning: `bun exec lefthook install`.
+Git hooks (via lefthook) run automatically on `git commit`: Prettier formats and ESLint auto-fixes staged files, then re-stages them. To install hooks after cloning: `bunx lefthook install`.
 
 Run a single test file:
 
 ```bash
-bun exec vitest run tests/utils/slugify.test.ts
+bunx vitest run tests/utils/slugify.test.ts
 ```
 
 ## Safety
