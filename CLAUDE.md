@@ -9,22 +9,22 @@ Laterite ("The Red Soil") is a static Astro publication site for eco-socialist a
 ## Commands
 
 ```bash
-pnpm run dev          # Start dev server
-pnpm run build        # Production build (outputs to dist/)
-pnpm run preview      # Preview production build
-pnpm run check        # TypeScript/Astro type checking
-pnpm run test         # Run all tests (vitest --run)
-pnpm run format       # Prettier (src/ + package.json)
-pnpm run lint         # ESLint with auto-fix (src/ + scripts/)
-pnpm run link-check   # Validate external links
+bun run dev          # Start dev server
+bun run build        # Production build (outputs to dist/)
+bun run preview      # Preview production build
+bun run check        # TypeScript/Astro type checking
+bun run test         # Run all tests (vitest --run)
+bun run format       # Prettier (src/ + package.json)
+bun run lint         # ESLint with auto-fix (src/ + scripts/)
+bun run link-check   # Validate external links
 ```
 
-Git hooks (via lefthook) run automatically on `git commit`: Prettier formats and ESLint auto-fixes staged files, then re-stages them. To install hooks after cloning: `pnpm exec lefthook install`.
+Git hooks (via lefthook) run automatically on `git commit`: Prettier formats and ESLint auto-fixes staged files, then re-stages them. To install hooks after cloning: `bun exec lefthook install`.
 
 Run a single test file:
 
 ```bash
-pnpm exec vitest run tests/utils/slugify.test.ts
+bun exec vitest run tests/utils/slugify.test.ts
 ```
 
 ## Safety
