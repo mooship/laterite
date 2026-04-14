@@ -28,14 +28,14 @@ An Astro-powered publication exploring capitalism, colonialism, and climate coll
 
 ## Getting Started
 
-Prerequisites: Bun 1.3.12 or higher, Git.
+Prerequisites: Node 24 or higher, npm 11 or higher, Git.
 
 ```bash
 git clone https://github.com/theredsoil/laterite.git
 cd laterite
-bun install
-bunx lefthook install  # set up git hooks
-bun run dev
+npm install
+npx lefthook install  # set up git hooks
+npm run dev
 ```
 
 Local dev server: `http://localhost:4321`
@@ -69,13 +69,13 @@ All commands are run from the project root.
 
 | Command           | Action                                     |
 | ----------------- | ------------------------------------------ |
-| `bun install`     | Install dependencies                       |
-| `bun run dev`     | Start local dev server at `localhost:4321` |
-| `bun run build`   | Build production site to `./dist/`         |
-| `bun run preview` | Preview local production build             |
-| `bun run check`   | Check TypeScript types                     |
-| `bun run format`  | Format code with Prettier                  |
-| `bun run test`    | Run tests with Vitest                      |
+| `npm install`     | Install dependencies                       |
+| `npm run dev`     | Start local dev server at `localhost:4321` |
+| `npm run build`   | Build production site to `./dist/`         |
+| `npm run preview` | Preview local production build             |
+| `npm run check`   | Check TypeScript types                     |
+| `npm run format`  | Format code with Prettier                  |
+| `npm test`        | Run tests with Vitest                      |
 
 ## Deployment
 
@@ -86,7 +86,7 @@ Build the site and deploy the `dist/` folder to any static hosting service.
 Contributions are welcome for both code and content.
 
 - Add posts in `src/content/dispatches/` with the required frontmatter
-- Run `bun run check` and `bun run test` before opening a pull request
+- Run `npm run check` and `npm test` before opening a pull request
 - Follow commit prefixes: `Add:`, `Fix:`, `Update:`, `Remove:`, `Docs:`
 - Follow the editorial standards in `EDITORIAL_GUIDELINES.md`
 
