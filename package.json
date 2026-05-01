@@ -23,7 +23,7 @@
     "@eslint/css": "^1.1.0",
     "@eslint/markdown": "^8.0.1",
     "astro": "^6.1.2",
-    "eslint": "^10.1.0",
+    "eslint": "^10.2.1",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-astro": "^1.6.0",
     "eslint-plugin-unicorn": "^64.0.0",
