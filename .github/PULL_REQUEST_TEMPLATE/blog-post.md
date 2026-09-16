@@ -20,7 +20,7 @@ Summarise the post and its motivation.
 
 - [ ] I have checked spelling
 - [ ] I have included all required frontmatter (title, datePublished, excerpt, categories, tags)
-- [ ] I have run `npm run lint` and `npm run format`
+- [ ] I have run `pnpm lint` and `pnpm format`
 - [ ] I have checked for broken links and images
 - [ ] I have marked as draft if not ready for publication
 - [ ] I have updated documentation if needed
