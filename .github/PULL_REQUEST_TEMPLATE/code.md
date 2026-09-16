@@ -20,8 +20,8 @@ Describe your code changes and the motivation behind them.
 - [ ] I have run all tests
 - [ ] I have added tests for all new code
 - [ ] I have updated existing tests if needed
-- [ ] I have run `npm run lint` and `npm run check`
-- [ ] I have run `npm run format`
+- [ ] I have run `pnpm lint` and `pnpm check`
+- [ ] I have run `pnpm format`
 - [ ] I have updated documentation if needed
 
 ## Additional Notes
