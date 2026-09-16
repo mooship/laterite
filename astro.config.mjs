@@ -28,9 +28,6 @@ export default defineConfig({
       cssVariable: "--font-jetbrains-mono",
     },
   ],
-  experimental: {
-    rustCompiler: true,
-  },
   prefetch: {
     defaultStrategy: "hover",
   },
