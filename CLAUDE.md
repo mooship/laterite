@@ -76,6 +76,10 @@ Tests live in `tests/utils/` and cover utility functions only (no component test
 
 Central config (site URL, author, social links) lives in `src/config.ts` and is imported across pages and components.
 
+## Deployment
+
+The site is hosted on **Cloudflare Pages**, previously undocumented here — build/deploy settings for the Git-integrated pipeline live in the Cloudflare dashboard and are unaffected by anything below. A `wrangler.jsonc` (`pages_build_output_dir: "./dist"`, plus `compatibility_date`/`compatibility_flags`) is committed for version control and so `wrangler pages deploy` works as a CLI/CI alternative if ever needed; `wrangler` is a devDependency for exactly that. `public/_headers` sets Cloudflare Pages' response headers (CSP, cache rules). As with any deploy, the Safety rule above applies to `wrangler pages deploy` too.
+
 ## Code style
 
 - **No inline comments** — never use trailing `//` comments on the same line as code. JSDoc block comments (`/** */`) are fine where genuinely useful.
