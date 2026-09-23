@@ -22,15 +22,7 @@ const { sections, ariaLabel = "Category navigation" } = Astro.props;
       {
         sections.map((section) => (
           <li>
-            <a
-              href={`#${section.id}`}
-              aria-current={
-                typeof window !== "undefined" && window.location.hash === `#${section.id}`
-                  ? "true"
-                  : undefined
-              }
-              data-section-id={section.id}
-            >
+            <a href={`#${section.id}`} data-section-id={section.id}>
               {section.label}
             </a>
           </li>
